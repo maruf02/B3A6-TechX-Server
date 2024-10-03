@@ -9,6 +9,7 @@ import { authRoutes } from "./app/modules/auth/auth.route";
 import cookieParser from "cookie-parser";
 import { PostRoutes } from "./app/modules/post/post.route";
 import { commentRoutes } from "./app/modules/comment/comment.route";
+import { paymentRoutes } from "./app/modules/payment/payment.route";
 
 // const port = 3000;
 
@@ -32,6 +33,7 @@ app.use("/api", carRoutes);
 app.use("/api", bookingRoutes);
 app.use("/api", PostRoutes);
 app.use("/api", commentRoutes);
+app.use("/api", paymentRoutes);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");

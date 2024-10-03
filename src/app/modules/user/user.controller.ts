@@ -78,7 +78,7 @@ const getUserById = catchAsync(async (req: Request, res: Response) => {
       message: "This user has been deleted",
     });
   }
-  if (user.isBlock) {
+  if (user.isBlock === "Yes") {
     return res.status(StatusCodes.NOT_FOUND).json({
       success: false,
       message: "This user has been block",

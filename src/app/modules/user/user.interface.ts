@@ -10,6 +10,10 @@ export type TUser = {
   password: string;
   phone: string;
   address: string;
+  paymentStatus: string;
+  PayDate: string;
+  PayStartTime: string;
+  PayEndTime: string;
 };
 
 export type TUserRole = keyof typeof USER_ROLE;
