@@ -30,8 +30,13 @@ const userSchema = new Schema<TUser>(
       default: false,
       required: true,
     },
-    image: {
+    profileImage: {
       type: String,
+      required: true,
+    },
+    coverImage: {
+      type: String,
+      required: true,
     },
     password: {
       type: String,
@@ -47,17 +52,38 @@ const userSchema = new Schema<TUser>(
       type: String,
       // required: true,
     },
+    follower: {
+      type: [String],
+      default: [], // Array of user IDs
+    },
+    following: {
+      type: [String],
+      default: [], // Array of user IDs
+    },
   },
   { timestamps: true }
 );
 
+// userSchema.pre("save", async function (next) {
+//   const user = this;
+//   user.password = await bcrypt.hash(
+//     user.password,
+//     Number(config.bcrypt_salt_rounds)
+//   );
+//   next();
+// });
 userSchema.pre("save", async function (next) {
-  const user = this;
-  user.password = await bcrypt.hash(
-    user.password,
-    Number(config.bcrypt_salt_rounds)
-  );
-  next();
+  if (this.isModified("password") || this.isNew) {
+    try {
+      const salt = await bcrypt.genSalt(10); // Generate a salt
+      this.password = await bcrypt.hash(this.password, salt); // Hash the password
+      next(); // Continue to save
+    } catch (error) {
+      return next(error); // Handle error
+    }
+  } else {
+    return next(); // Continue to save if password is not modified
+  }
 });
 userSchema.post("save", function (doc, next) {
   doc.password = "";

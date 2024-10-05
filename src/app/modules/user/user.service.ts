@@ -71,6 +71,38 @@ const softDeleteUserByIdFromDB = async (id: string) => {
   return deletedUser;
 };
 
+const followUserInDB = async (followerId: string, userId: string) => {
+  // Find the user being followed
+  const userToFollow = await UserModel.findById(userId);
+  if (!userToFollow) throw new Error("User not found");
+
+  // Find the follower (current user)
+  const follower = await UserModel.findById(followerId);
+  if (!follower) throw new Error("Follower not found");
+
+  // Initialize follower and following arrays if they don't exist
+  if (!userToFollow.follower) userToFollow.follower = [];
+  if (!follower.following) follower.following = [];
+
+  // Toggle follow/unfollow for the user being followed
+  if (userToFollow.follower.includes(followerId)) {
+    // Unfollow
+    userToFollow.follower = userToFollow.follower.filter(
+      (id) => id !== followerId
+    );
+    follower.following = follower.following.filter((id) => id !== userId); // Remove from following
+  } else {
+    // Follow
+    userToFollow.follower.push(followerId);
+    follower.following.push(userId); // Add to following
+  }
+
+  // Save both users
+  await userToFollow.save();
+  await follower.save();
+  return userToFollow;
+};
+
 export const userServices = {
   createUserIntoDB,
   getAllUsersFromDB,
@@ -79,4 +111,5 @@ export const userServices = {
   getUserByIdFromDB,
   updateUserByIdInDB,
   softDeleteUserByIdFromDB,
+  followUserInDB,
 };

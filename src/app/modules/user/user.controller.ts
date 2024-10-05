@@ -133,6 +133,20 @@ const softDeleteUserById = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const followUser = async (req: Request, res: Response) => {
+  const { followerId } = req.body; // This is myId (the current user)
+  const { id: userId } = req.params; // This is userId (the user being followed)
+
+  const updatedUser = await userServices.followUserInDB(followerId, userId);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "Follow/Unfollow successful",
+    data: updatedUser,
+  });
+};
+
 export const userController = {
   createUser,
   getAllUsers,
@@ -141,4 +155,5 @@ export const userController = {
   getUserById,
   updateUserById,
   softDeleteUserById,
+  followUser,
 };

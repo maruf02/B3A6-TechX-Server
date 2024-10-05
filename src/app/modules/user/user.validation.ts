@@ -9,5 +9,6 @@ export const userValidationSchema = z.object({
   password: z.string(),
   phone: z.string(),
   address: z.string(),
-  image: z.string().optional(),
+  profileImage: z.string(),
+  coverImage: z.string(),
 });
