@@ -3,14 +3,13 @@ import { TPayment } from "./payment.interface";
 
 const PaymentSchema = new Schema<TPayment>(
   {
-    bookingId: {
-      type: String,
-      ref: "Booking",
+    userIdP: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
       required: true,
     },
     userId: {
       type: String,
-      ref: "User",
       required: true,
     },
     amount: {

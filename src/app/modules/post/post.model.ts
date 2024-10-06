@@ -1,8 +1,13 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 import { TPost } from "./post.interface";
 
 const postSchema = new Schema<TPost>(
   {
+    userIdP: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     userId: {
       type: String,
       required: true,

@@ -104,12 +104,12 @@ const confirmationService = async (transactionId: string) => {
 
 // *************************************************
 const getAllPaymentsFromDB = async () => {
-  const payments = await PaymentModel.find();
+  const payments = await PaymentModel.find().populate("userIdP");
   return payments;
 };
 
 const getPaymentByIdFromDB = async (paymentId: string) => {
-  const payment = await PaymentModel.findById(paymentId);
+  const payment = await PaymentModel.findById(paymentId).populate("userIdP");
   if (!payment) {
     throw new AppError(StatusCodes.NOT_FOUND, "Payment not found");
   }
@@ -117,7 +117,7 @@ const getPaymentByIdFromDB = async (paymentId: string) => {
 };
 
 const getPaymentByUserIdFromDB = async (userId: string) => {
-  const payments = await PaymentModel.find({ userId });
+  const payments = await PaymentModel.find({ userId }).populate("userIdP");
   return payments;
 };
 

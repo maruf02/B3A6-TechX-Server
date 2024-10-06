@@ -1,5 +1,7 @@
+import { Types } from "mongoose";
+
 export type TFollow = {
-  userId: string;
+  userId: Types.ObjectId;
   followers: string[];
   following: string[];
 };

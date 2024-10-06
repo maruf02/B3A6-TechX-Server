@@ -6,18 +6,30 @@ const createPostInDB = async (post: TPost) => {
   return result;
 };
 
+// const getAllPostsFromDB = async () => {
+//   const posts = await PostModel.find();
+//   return posts;
+// };
 const getAllPostsFromDB = async () => {
-  const posts = await PostModel.find();
+  const posts = await PostModel.find().populate("userIdP"); // Populate userId with full user info
   return posts;
 };
 
+// const getPostByIdFromDB = async (id: string) => {
+//   const post = await PostModel.findById(id);
+//   return post;
+// };
 const getPostByIdFromDB = async (id: string) => {
-  const post = await PostModel.findById(id);
+  const post = await PostModel.findById(id).populate("userIdP"); // Populate userId with full user info
   return post;
 };
 
+// const getPostsByUserIdFromDB = async (userId: string) => {
+//   const posts = await PostModel.find({ userId: userId }); // Find posts where userId matches
+//   return posts;
+// };
 const getPostsByUserIdFromDB = async (userId: string) => {
-  const posts = await PostModel.find({ userId: userId }); // Find posts where userId matches
+  const posts = await PostModel.find({ userId: userId }).populate("userIdP"); // Populate userId with full user info
   return posts;
 };
 

@@ -7,6 +7,11 @@ export const commentSchema = new Schema<TComment>(
       type: String,
       required: true,
     },
+    userIdP: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     name: {
       type: String,
       required: true,

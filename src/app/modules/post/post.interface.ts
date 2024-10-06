@@ -1,5 +1,8 @@
+import { Types } from "mongoose";
+
 export type TPost = {
   userId: string;
+  userIdP: Types.ObjectId;
   name: string;
   post: string;
   category: "Web" | "Software" | "Engineering" | "AI";

@@ -12,7 +12,7 @@ const createCommentInDB = async (commentData: TComment): Promise<TComment> => {
 const getCommentsByPostIdFromDB = async (
   postId: string
 ): Promise<TComment[]> => {
-  return await CommentModel.find({ postId });
+  return await CommentModel.find({ postId }).populate("userIdP");
 };
 
 // Update an existing comment
