@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { commentServices } from "./comment.service";
 
-// Create a new comment
 const createComment = async (req: Request, res: Response) => {
   try {
     const newComment = await commentServices.createCommentInDB(req.body);
@@ -11,7 +10,6 @@ const createComment = async (req: Request, res: Response) => {
   }
 };
 
-// Get all comments for a specific post
 const getCommentsByPostId = async (req: Request, res: Response) => {
   try {
     const comments = await commentServices.getCommentsByPostIdFromDB(
@@ -25,7 +23,6 @@ const getCommentsByPostId = async (req: Request, res: Response) => {
   }
 };
 
-// Update a comment
 const updateCommentById = async (req: Request, res: Response) => {
   try {
     const updatedComment = await commentServices.updateCommentByIdInDB(
@@ -41,7 +38,6 @@ const updateCommentById = async (req: Request, res: Response) => {
   }
 };
 
-// Delete a comment
 const deleteCommentById = async (req: Request, res: Response) => {
   try {
     const deletedComment = await commentServices.deleteCommentByIdInDB(

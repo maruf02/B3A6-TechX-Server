@@ -44,8 +44,6 @@ import { initiatePayment, paymentVerify } from "./payment.utils";
 
 const createPaymentIntoDB = async (payment: TPayment) => {
   try {
-    // Validate payment data here if necessary
-
     const generateTransactionId = () => {
       const timestamp = Date.now();
       const randomPart = Math.random().toString(36).substring(2, 15);
@@ -59,7 +57,6 @@ const createPaymentIntoDB = async (payment: TPayment) => {
       transactionId,
     };
 
-    // Ensure that the payment data is correctly structured
     const result = await PaymentModel.create(paymentData);
 
     if (!result) {

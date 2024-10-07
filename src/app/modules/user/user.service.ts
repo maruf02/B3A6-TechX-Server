@@ -29,7 +29,6 @@ const updatePasswordByEmail = async (email: string, password: string) => {
     throw new Error("New password is required");
   }
 
-  // Hash the new password
   const saltRounds = Number(config.bcrypt_salt_rounds);
   if (isNaN(saltRounds) || saltRounds <= 0) {
     throw new Error("Invalid salt rounds configuration");
@@ -37,7 +36,6 @@ const updatePasswordByEmail = async (email: string, password: string) => {
   console.log("object", email, password);
   const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-  // Find the user by email and update the password
   const user = await UserModel.findOneAndUpdate(
     { email },
     { password: hashedPassword },
@@ -72,32 +70,25 @@ const softDeleteUserByIdFromDB = async (id: string) => {
 };
 
 const followUserInDB = async (followerId: string, userId: string) => {
-  // Find the user being followed
   const userToFollow = await UserModel.findById(userId);
   if (!userToFollow) throw new Error("User not found");
 
-  // Find the follower (current user)
   const follower = await UserModel.findById(followerId);
   if (!follower) throw new Error("Follower not found");
 
-  // Initialize follower and following arrays if they don't exist
   if (!userToFollow.follower) userToFollow.follower = [];
   if (!follower.following) follower.following = [];
 
-  // Toggle follow/unfollow for the user being followed
   if (userToFollow.follower.includes(followerId)) {
-    // Unfollow
     userToFollow.follower = userToFollow.follower.filter(
       (id) => id !== followerId
     );
-    follower.following = follower.following.filter((id) => id !== userId); // Remove from following
+    follower.following = follower.following.filter((id) => id !== userId);
   } else {
-    // Follow
     userToFollow.follower.push(followerId);
-    follower.following.push(userId); // Add to following
+    follower.following.push(userId);
   }
 
-  // Save both users
   await userToFollow.save();
   await follower.save();
   return userToFollow;

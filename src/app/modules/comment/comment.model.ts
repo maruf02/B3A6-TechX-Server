@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { TComment } from "./comment.interface"; // Adjust the path according to your structure
+import { TComment } from "./comment.interface";
 
 export const commentSchema = new Schema<TComment>(
   {
@@ -33,7 +33,6 @@ export const commentSchema = new Schema<TComment>(
   { timestamps: true }
 );
 
-// Pre-hook to filter out deleted comments
 commentSchema.pre("find", function (next) {
   this.find({ isDeleted: { $ne: true } });
   next();

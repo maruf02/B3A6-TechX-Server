@@ -18,12 +18,12 @@ const userSchema = new Schema<TUser>(
     role: {
       type: String,
       enum: ["user", "admin"],
-      default: "user", // Auto-set default value
+      default: "user",
     },
     isBlock: {
       type: String,
       enum: ["Yes", "No"],
-      default: "No", // Auto-set default value
+      default: "No",
     },
     isDeleted: {
       type: Boolean,
@@ -54,11 +54,11 @@ const userSchema = new Schema<TUser>(
     },
     follower: {
       type: [String],
-      default: [], // Array of user IDs
+      default: [],
     },
     following: {
       type: [String],
-      default: [], // Array of user IDs
+      default: [],
     },
   },
   { timestamps: true }
@@ -75,14 +75,14 @@ const userSchema = new Schema<TUser>(
 userSchema.pre("save", async function (next) {
   if (this.isModified("password") || this.isNew) {
     try {
-      const salt = await bcrypt.genSalt(10); // Generate a salt
-      this.password = await bcrypt.hash(this.password, salt); // Hash the password
-      next(); // Continue to save
+      const salt = await bcrypt.genSalt(10);
+      this.password = await bcrypt.hash(this.password, salt);
+      next();
     } catch (error) {
-      return next(error); // Handle error
+      return next(error);
     }
   } else {
-    return next(); // Continue to save if password is not modified
+    return next();
   }
 });
 userSchema.post("save", function (doc, next) {

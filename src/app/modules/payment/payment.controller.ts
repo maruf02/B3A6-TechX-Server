@@ -1,5 +1,3 @@
-// payment.controller.ts
-
 import sendResponse from "../utils/sendResponse";
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
@@ -19,7 +17,7 @@ const createPayment = catchAsync(async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
-    console.error("Error in createPayment:", error); // Added for debugging
+    console.error("Error in createPayment:", error);
     sendResponse(res, {
       success: false,
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
@@ -103,7 +101,7 @@ const getPaymentById = catchAsync(async (req: Request, res: Response) => {
       success: false,
       statusCode: StatusCodes.NOT_FOUND,
       message: "Payment not found",
-      data: null, // Add a default value for data
+      data: null,
     });
   }
 
@@ -119,7 +117,6 @@ const getPaymentByUserId = catchAsync(async (req: Request, res: Response) => {
   const { userId } = req.params;
   const payments = await paymentService.getPaymentByUserIdFromDB(userId);
 
-  // If there are no payments, handle accordingly
   if (payments.length === 0) {
     return sendResponse(res, {
       success: false,
@@ -129,14 +126,13 @@ const getPaymentByUserId = catchAsync(async (req: Request, res: Response) => {
     });
   }
 
-  // Return the first payment in the response
   const payment = payments[0];
 
   sendResponse(res, {
     success: true,
     statusCode: StatusCodes.OK,
     message: "Payment retrieved successfully for the user",
-    data: payment, // Send the single payment object
+    data: payment,
   });
 });
 

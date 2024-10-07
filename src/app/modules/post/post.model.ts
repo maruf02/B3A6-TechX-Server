@@ -1,4 +1,4 @@
-import mongoose, { Schema, model } from "mongoose";
+import { Schema, model } from "mongoose";
 import { TPost } from "./post.interface";
 
 const postSchema = new Schema<TPost>(
@@ -36,11 +36,11 @@ const postSchema = new Schema<TPost>(
     },
     likes: {
       type: [String],
-      default: [], // Array of user IDs
+      default: [],
     },
     dislikes: {
       type: [String],
-      default: [], // Array of user IDs
+      default: [],
     },
     isDeleted: {
       type: Boolean,

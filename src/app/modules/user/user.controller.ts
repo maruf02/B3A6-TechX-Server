@@ -134,8 +134,8 @@ const softDeleteUserById = catchAsync(async (req: Request, res: Response) => {
 });
 
 const followUser = async (req: Request, res: Response) => {
-  const { followerId } = req.body; // This is myId (the current user)
-  const { id: userId } = req.params; // This is userId (the user being followed)
+  const { followerId } = req.body;
+  const { id: userId } = req.params;
 
   const updatedUser = await userServices.followUserInDB(followerId, userId);
 

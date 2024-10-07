@@ -55,12 +55,11 @@ const likePostByIdInDB = async (postId: string, userId: string) => {
     throw new Error("Post not found");
   }
 
-  // Check if the user has already liked the post
   if (post.likes.includes(userId)) {
-    post.likes = post.likes.filter((id) => id !== userId); // Remove like
+    post.likes = post.likes.filter((id) => id !== userId);
   } else {
-    post.likes.push(userId); // Add like
-    post.dislikes = post.dislikes.filter((id) => id !== userId); // Remove dislike if exists
+    post.likes.push(userId);
+    post.dislikes = post.dislikes.filter((id) => id !== userId);
   }
 
   await post.save();
@@ -73,12 +72,11 @@ const dislikePostByIdInDB = async (postId: string, userId: string) => {
     throw new Error("Post not found");
   }
 
-  // Check if the user has already disliked the post
   if (post.dislikes.includes(userId)) {
-    post.dislikes = post.dislikes.filter((id) => id !== userId); // Remove dislike
+    post.dislikes = post.dislikes.filter((id) => id !== userId);
   } else {
-    post.dislikes.push(userId); // Add dislike
-    post.likes = post.likes.filter((id) => id !== userId); // Remove like if exists
+    post.dislikes.push(userId);
+    post.likes = post.likes.filter((id) => id !== userId);
   }
 
   await post.save();

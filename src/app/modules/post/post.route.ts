@@ -10,7 +10,6 @@ router.get("/posts", postController.getAllPosts);
 router.get("/posts/user/:userId", postController.getPostsByUserId); // Add this line to your routes
 router.get("/posts/:id", postController.getPostById);
 router.put("/posts/:id", postController.updatePostById);
-// Assuming you are using Express
 
 router.delete("/posts/:id", postController.softDeletePostById);
 

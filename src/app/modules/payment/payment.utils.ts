@@ -1,4 +1,3 @@
-// payment.utils.ts
 import axios from "axios";
 import dotenv from "dotenv";
 
