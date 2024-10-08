@@ -52,7 +52,27 @@ const refreshToken = catchAsync(async (req, res) => {
   });
 });
 
+const logoutUser = catchAsync(async (req, res) => {
+  // Clear the accessToken and refreshToken cookies
+  res.clearCookie("accessToken", {
+    secure: false,
+    httpOnly: true,
+  });
+  res.clearCookie("refreshToken", {
+    secure: false,
+    httpOnly: true,
+  });
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "User logged out successfully",
+    data: null,
+  });
+});
+
 export const AuthControllers = {
   loginUser,
   refreshToken,
+  logoutUser,
 };
