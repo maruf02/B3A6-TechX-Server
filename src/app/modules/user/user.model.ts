@@ -60,6 +60,21 @@ const userSchema = new Schema<TUser>(
       type: [String],
       default: [],
     },
+
+    followerP: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+      },
+    ],
+    followingP: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+      },
+    ],
   },
   { timestamps: true }
 );
@@ -79,7 +94,7 @@ userSchema.pre("save", async function (next) {
       this.password = await bcrypt.hash(this.password, salt);
       next();
     } catch (error) {
-      return next(error);
+      return next(error as Error);
     }
   } else {
     return next();

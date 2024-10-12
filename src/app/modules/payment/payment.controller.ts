@@ -3,6 +3,10 @@ import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { paymentService } from "./payment.service";
 import catchAsync from "../utils/cacheAsync";
+interface CustomError extends Error {
+  statusCode?: number; // Optional, depending on your needs
+  code?: string; // You can define any specific error codes if necessary
+}
 
 const createPayment = catchAsync(async (req: Request, res: Response) => {
   const paymentData = req.body;
@@ -17,12 +21,12 @@ const createPayment = catchAsync(async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
-    console.error("Error in createPayment:", error);
+    const customError = error as CustomError;
     sendResponse(res, {
       success: false,
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       message: "Failed to create payment",
-      error: error.message,
+      data: customError.message,
     });
   }
 });
@@ -48,7 +52,7 @@ const confirmationController = catchAsync(
         <body>
           <h1>Payment Successful</h1>
           <p>Your payment has been successfully processed.</p>
-          <a href="https://car-rental-project-kappa.vercel.app/DashBoard/ManagePayment">Back to Payment Management</a>
+          <a href="https://techx-client.vercel.app/profile/user">Back to Payment Management</a>
         </body>
       </html>`);
   }
@@ -75,7 +79,7 @@ const failureController = catchAsync(async (req: Request, res: Response) => {
         <body>
           <h1>Payment Failed</h1>
           <p>Unfortunately, your payment could not be processed. Please try again later.</p>
-          <a href="https://car-rental-project-kappa.vercel.app/DashBoard/ManagePayment">Back to Payment Management</a>
+          <a href="https://techx-client.vercel.app/profile/user">Back to Payment Management</a>
         </body>
       </html>
     `);

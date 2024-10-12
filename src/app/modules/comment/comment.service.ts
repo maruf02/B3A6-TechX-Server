@@ -6,6 +6,11 @@ const createCommentInDB = async (commentData: TComment): Promise<TComment> => {
   return await newComment.save();
 };
 
+const getAllCommentsFromDB = async () => {
+  const posts = await CommentModel.find();
+  return posts;
+};
+
 const getCommentsByPostIdFromDB = async (
   postId: string
 ): Promise<TComment[]> => {
@@ -32,4 +37,5 @@ export const commentServices = {
   getCommentsByPostIdFromDB,
   updateCommentByIdInDB,
   deleteCommentByIdInDB,
+  getAllCommentsFromDB,
 };

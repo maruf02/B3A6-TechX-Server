@@ -1,6 +1,6 @@
 // payment.service.ts
 import { StatusCodes } from "http-status-codes";
-import { BookingModel } from "../booking/booking.model";
+
 import { UserModel } from "../user/user.model";
 import AppError from "../utils/AppError";
 import { TPayment } from "./payment.interface";

@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import config from "../../config";
 import { TUser } from "./user.interface";
 import { UserModel } from "./user.model";
@@ -15,12 +16,18 @@ const createUserIntoDB = async (user: TUser) => {
 };
 
 const getAllUsersFromDB = async () => {
-  const users = await UserModel.find().select("-password");
+  const users = await UserModel.find()
+    .select("-password")
+    .populate("followerP")
+    .populate("followingP");
   return users;
 };
 
 const getUserByEmailFromDB = async (email: string) => {
-  const user = await UserModel.findOne({ email }).select("-password");
+  const user = await UserModel.findOne({ email })
+    .select("-password")
+    .populate("followerP")
+    .populate("followingP");
   return user;
 };
 
@@ -49,7 +56,10 @@ const updatePasswordByEmail = async (email: string, password: string) => {
   return user;
 };
 const getUserByIdFromDB = async (id: string) => {
-  const user = await UserModel.findById(id).select("-password");
+  const user = await UserModel.findById(id)
+    .select("-password")
+    .populate("followerP")
+    .populate("followingP");
   return user;
 };
 
@@ -69,6 +79,44 @@ const softDeleteUserByIdFromDB = async (id: string) => {
   return deletedUser;
 };
 
+// const followUserInDB = async (followerId: string, userId: string) => {
+//   const userToFollow = await UserModel.findById(userId);
+//   if (!userToFollow) throw new Error("User not found");
+
+//   const follower = await UserModel.findById(followerId);
+//   if (!follower) throw new Error("Follower not found");
+
+//   if (!userToFollow.follower) userToFollow.follower = [];
+//   if (!userToFollow.followerP) userToFollow.followerP = [];
+//   if (!follower.following) follower.following = [];
+//   if (!follower.followingP) follower.followingP = [];
+
+//   const followerObjectId = new Types.ObjectId(followerId);
+//   const userObjectId = new Types.ObjectId(userId);
+
+//   if (userToFollow.follower.includes(followerId)) {
+//     userToFollow.follower = userToFollow.follower.filter(
+//       (id) => id !== followerId
+//     );
+//     userToFollow.followerP = userToFollow.followerP.filter(
+//       (id) => !id.equals(followerObjectId)
+//     );
+//     follower.following = follower.following.filter((id) => id !== userId);
+//     follower.followingP = follower.followingP.filter(
+//       (id) => !id.equals(userObjectId)
+//     );
+//   } else {
+//     userToFollow.follower.push(followerId);
+//     userToFollow.followerP.push(followerObjectId);
+//     follower.following.push(userId);
+//     follower.followingP.push(userObjectId);
+//   }
+
+//   await userToFollow.save();
+//   await follower.save();
+//   return userToFollow;
+// };
+
 const followUserInDB = async (followerId: string, userId: string) => {
   const userToFollow = await UserModel.findById(userId);
   if (!userToFollow) throw new Error("User not found");
@@ -76,21 +124,43 @@ const followUserInDB = async (followerId: string, userId: string) => {
   const follower = await UserModel.findById(followerId);
   if (!follower) throw new Error("Follower not found");
 
-  if (!userToFollow.follower) userToFollow.follower = [];
-  if (!follower.following) follower.following = [];
+  // Ensure the arrays exist or initialize them if not
+  userToFollow.follower = userToFollow.follower || [];
+  userToFollow.followerP = userToFollow.followerP || [];
 
+  follower.following = follower.following || [];
+  follower.followingP = follower.followingP || [];
+
+  const followerObjectId = new Types.ObjectId(followerId);
+  const userObjectId = new Types.ObjectId(userId);
+
+  // Check if the follower already exists
   if (userToFollow.follower.includes(followerId)) {
+    // Unfollow the user: remove from both follower/following and followerP/followingP arrays
     userToFollow.follower = userToFollow.follower.filter(
       (id) => id !== followerId
     );
+    userToFollow.followerP = userToFollow.followerP.filter(
+      (id) => !id.equals(followerObjectId)
+    );
+
     follower.following = follower.following.filter((id) => id !== userId);
+    follower.followingP = follower.followingP.filter(
+      (id) => !id.equals(userObjectId)
+    );
   } else {
+    // Follow the user: add to both follower/following and followerP/followingP arrays
     userToFollow.follower.push(followerId);
+    userToFollow.followerP.push(followerObjectId);
+
     follower.following.push(userId);
+    follower.followingP.push(userObjectId);
   }
 
+  // Save the updated documents
   await userToFollow.save();
   await follower.save();
+
   return userToFollow;
 };
 

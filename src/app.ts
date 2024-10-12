@@ -10,6 +10,7 @@ import cookieParser from "cookie-parser";
 import { PostRoutes } from "./app/modules/post/post.route";
 import { commentRoutes } from "./app/modules/comment/comment.route";
 import { paymentRoutes } from "./app/modules/payment/payment.route";
+import { loginActivityRoutes } from "./app/modules/loginActivity/loginActivity.route";
 
 // const port = 3000;
 
@@ -18,11 +19,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "https://car-rental-project-kappa.vercel.app",
-      "*",
-    ],
+    origin: ["http://localhost:3000", "https://techx-client.vercel.app", "*"],
     credentials: true,
   })
 );
@@ -34,6 +31,7 @@ app.use("/api", bookingRoutes);
 app.use("/api", PostRoutes);
 app.use("/api", commentRoutes);
 app.use("/api", paymentRoutes);
+app.use("/api", loginActivityRoutes);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");

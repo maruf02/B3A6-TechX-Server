@@ -10,6 +10,17 @@ const createComment = async (req: Request, res: Response) => {
   }
 };
 
+const getAllComments = async (req: Request, res: Response) => {
+  try {
+    const comments = await commentServices.getAllCommentsFromDB(); // This should be defined in your service
+    return res.status(200).json(comments);
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Failed to retrieve comments", error });
+  }
+};
+
 const getCommentsByPostId = async (req: Request, res: Response) => {
   try {
     const comments = await commentServices.getCommentsByPostIdFromDB(
@@ -57,4 +68,5 @@ export const commentController = {
   getCommentsByPostId,
   updateCommentById,
   deleteCommentById,
+  getAllComments,
 };
