@@ -35,11 +35,15 @@ const postSchema = new Schema<TPost>(
       required: true,
     },
     likes: {
-      type: [String],
+      type: [[String]],
       default: [],
     },
     dislikes: {
-      type: [String],
+      type: [[String]],
+      default: [],
+    },
+    views: {
+      type: [[String]],
       default: [],
     },
     isDeleted: {

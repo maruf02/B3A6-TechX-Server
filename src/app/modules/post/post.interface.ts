@@ -8,7 +8,8 @@ export type TPost = {
   category: "Web" | "Software" | "Engineering" | "AI";
   type?: "Free" | "Premium";
   images: string;
-  likes: string[];
-  dislikes: string[];
+  likes: [string, string][];
+  dislikes: [string, string][];
+  views?: [string, string][];
   isDeleted?: boolean;
 };
