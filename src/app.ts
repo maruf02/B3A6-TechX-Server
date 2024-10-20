@@ -11,6 +11,7 @@ import { PostRoutes } from "./app/modules/post/post.route";
 import { commentRoutes } from "./app/modules/comment/comment.route";
 import { paymentRoutes } from "./app/modules/payment/payment.route";
 import { loginActivityRoutes } from "./app/modules/loginActivity/loginActivity.route";
+import { ReplyCommentRoutes } from "./app/modules/replyComment/replyComment.route";
 
 // const port = 3000;
 
@@ -32,6 +33,7 @@ app.use("/api", PostRoutes);
 app.use("/api", commentRoutes);
 app.use("/api", paymentRoutes);
 app.use("/api", loginActivityRoutes);
+app.use("/api", ReplyCommentRoutes);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
