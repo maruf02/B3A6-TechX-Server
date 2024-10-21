@@ -101,7 +101,12 @@ const likePostByIdInDB = async (postId: string, userId: string) => {
     // Add new like with date
     post.likes.push([today, userId]);
     // Remove from dislikes if exists
-    post.dislikes = post.dislikes.filter((id) => id !== userId);
+
+    // need this line********************************
+    // ************************************************
+    // post.dislikes = post.dislikes.filter((id) => id !== userId);
+    // *****************************************************
+    // need this line********************************
   }
 
   await post.save();
@@ -128,7 +133,11 @@ const dislikePostByIdInDB = async (postId: string, userId: string) => {
     // Add new dislike with date
     post.dislikes.push([today, userId]);
     // Remove from likes if exists
-    post.likes = post.likes.filter((id) => id !== userId);
+    // need this line********************************
+    // ************************************************
+    // post.likes = post.likes.filter((id) => id !== userId);
+    // *****************************************************
+    // need this line********************************
   }
 
   await post.save();
