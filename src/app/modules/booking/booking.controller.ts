@@ -81,6 +81,49 @@ const createBooking = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+// const createBooking = catchAsync(async (req: Request, res: Response) => {
+//   const {
+//     carId,
+//     date,
+//     startTime,
+//     DLicense,
+//     additionInfo,
+//     nid,
+//     passport,
+//     paymentInfo,
+//   } = req.body;
+//   const { _id } = req.userAll;
+//   const today = moment().startOf("day");
+//   const bookingDate = moment(date).startOf("day");
+
+//   if (bookingDate.isBefore(today)) {
+//     throw new AppError(
+//       StatusCodes.BAD_REQUEST,
+//       "Booking date cannot be in the past"
+//     );
+//   }
+
+//   const bookingData = {
+//     car: carId,
+//     user: _id,
+//     date,
+//     startTime,
+//     DLicense,
+//     additionInfo,
+//     nid,
+//     passport,
+//     paymentInfo,
+//   };
+
+//   const result = await bookingService.createBookingIntoDB(bookingData);
+
+//   sendResponse(res, {
+//     statusCode: StatusCodes.OK,
+//     success: true,
+//     message: "Booking is created successfully",
+//     data: result,
+//   });
+// });
 
 const getAllBooking = catchAsync(async (req: Request, res: Response) => {
   const result = await bookingService.getAllBookingFromDB();
