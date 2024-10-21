@@ -1,8 +1,8 @@
-# SpeedeRex
+# TechX
 
-# Live:- https://car-rental-project-kappa.vercel.app/
+# Live:- https://techx-client.vercel.app/
 
-# Live(Backend):- https://car-rental-server5.vercel.app/
+# Live(Backend):- https://techx-server-five.vercel.app/
 
 # Credential:
 
@@ -14,29 +14,29 @@
 
 ## User:
 
-### Email: user@user.com
+### Email: mk@mk.com
 
-### Password: password1234
+### Password: mk
 
 ## Introduction
 
-This is SpeedeRex project. this is a little type of car Retal type project. this project very small but you can get vibe of little management system, React, Redux.
+This is TechX project. this is a little of Blog type project. this project very small but you can get vibe of little Social media system, NextJs, React, Redux.
 
 ## Project Description
 
-This is SpeedeRex project. this is a little type of Rental type type project. this project very small but you can get vibe of little management system, React, Redux. The purpose of this project create a vibe of fast performance os state that manage in Redux
+This is TechX project. this is a little of Blog type type project. this project very small but you can get vibe of little Social media system, NextJs, React, Redux. The purpose of this project create a vibe of fast performance os state that manage in Redux with NexJs system technology
 
 ## Features
 
-- Api for list of all car
-- APi for search by text that search work for car tittle and description. so you can get accurate result.
-- Api for sort car by your price range
-- Api for sort your car but category wise
-- Api for sort car price high to low also low to high
-- Api for booking your car
+- Api for list of all Blog
+- APi for search by text that search work for Blog tittle and description. so you can get accurate result.
+- Api for sort Blog by your price range
+- Api for sort your Blog but category wise
+- Api for sort Blog most likes/upvote
+- Api for create your Blog
 - Api for manage your account
-- Api for manage Booking car
-- Api for Payment your car rent
+- Api for manage Blog post
+- Api for Payment for your premium post visit
 
 ## Technology Stack
 
